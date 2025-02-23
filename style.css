@@ -28,3 +28,12 @@ a{
 .events button:first-child{
     width: 80px;
 }
+
+.themes img{
+    width: 100%;
+    height: auto;
+}
+
+.upcomingEvents{
+    padding: 100px 0px;
+}
