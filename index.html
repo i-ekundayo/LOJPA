@@ -11,54 +11,54 @@
   <body>
 
     <!-- NAVIGATION BAR -->
-    <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
-      <div class="container">
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark d-flex justify-content-start" id="navBar">
+      <div class="d-flex justify-content-between">
 
         <!-- Hamburger Button -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
           <span class="navbar-toggler-icon"></span>
         </button>
 
-        <!--  Navigation Items-->
-        <div class="collapse navbar-collapse" id="navmenu">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a href="#" class="nav-link">Home</a>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link">Events</a>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link">Sermons</a>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link">Blog</a>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link">About</a>
-            </li>
-          </ul>
-        </div>
-
         <!-- Navigation Logo -->
         <a href="#" class="navbar-brand">
-          <img src="images/logo.png" alt="logo.png">
+          <img src="images/logo.png" alt="logo.png" class="align-self-center">
         </a>
       </div>
     </nav>
 
+    <!-- NAVIGATION MENU -->
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a href="#" class="nav-link">Home</a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">Events</a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">Sermons</a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">Blog</a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">About</a>
+        </li>
+      </ul>
+    </div>
+
     <!-- NEXT UPCOMING EVENT -->
-    <section>
-      <img src="/images/image-3-mobile.jpg" alt="">
-      <div class="container">
-        <h2 class="mt-20">Next event in:<br><h5>Heart For The House Sunday</h5></h2>
-        <span class="nextEventTime">
-          <span class="days">239 <br> DAYS</span> <br>
-          <span class="hrs">239 <br> HOURS</span> <br>
-          <span class="mins">239 <br> MINUTES</span> <br>
-          <span class="secs">239 <br> SECONDS</span> <br>
+    <section id="nextUpcomingEvent">
+      <div id="image-slider"><img src="./images/image-slider-1.png" alt=""></div>
+      <div class="container text-center d-flex flex-column align-items-center p-5">
+        <h2 class="mt-20">Next event in:<br><h6>Heart For The House Sunday</h6></h2>
+        <span class="nextEventTime d-flex justify-content-between mb-4">
+          <span class="days"><h3>239</h3><small>DAYS</small></span> <br>
+          <span class="hrs"><h3>239</h3><small>HOURS</small></span> <br>
+          <span class="mins"><h3>239</h3><small>MINUTES</small></span> <br>
+          <span class="secs"><h3>239</h3><small>SECONDS</small></span> <br>
         </span>
-        <button class="btn btn-warning">EVENT DETAIL</button>
+        <button class="btn p-3 bg-expand">EVENT DETAIL</button>
       </div>
     </section>
 
