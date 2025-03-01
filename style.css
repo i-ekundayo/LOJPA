@@ -5,6 +5,11 @@
     list-style: none;
 }
 
+body{
+    background-color: #212529;
+    color: white;
+}
+
 a{
     text-decoration: none;
 }
@@ -24,6 +29,10 @@ footer {
     outline: none;
     box-shadow: none;
     border: none;
+}
+
+#nextUpcomingEvent {
+    color: black;
 }
 
 #nextUpcomingEvent #image-slider{
@@ -49,31 +58,30 @@ footer {
     padding-bottom: 0;
 }
 
-/* #nextUpcomingEvent button{
+#nextUpcomingEvent button{
     width: 200px;
     background: linear-gradient(to right, red 50%, bisque 50%);
+    background-size: 200% 100%;
+    background-position: 100% 0;
+    transition: background-position 0.25s ease-in-out;
     background-color: bisque;
     border: 2px solid black;
     border-radius: 0;
-} */
-
-.bg-expand {
-    background: linear-gradient(to right, #ff5733 50%, #007bff 50%);
-    background-size: 200% 100%;
-    background-position: 100% 0;
-    transition: background-position 0.5s ease-in-out;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
 }
 
-.bg-expand:hover{
-    /* background-color: red;
+#nextUpcomingEvent button:hover{
+    background-position: 0% 0;
     color: white;
-    border: 2px solid red; */
-    background-position: 0 0;
+    border: 2px solid red;
+}
+
+#welcomeSection {
+    margin-top: 100px;
+    text-align: center;
+}
+
+#welcomeSection img {
+    width: 90%;
 }
 
 
