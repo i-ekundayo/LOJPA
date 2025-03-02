@@ -80,8 +80,32 @@ footer {
     text-align: center;
 }
 
-#welcomeSection img {
+#welcomeSection .images{
+    position: relative;
     width: 90%;
+}
+
+#welcomeSection .images img:first-child {
+    width: 100%;
+}
+
+#welcomeSection .images .iconView {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    background-color: black;
+    opacity: 0;
+    transition: opacity 0.3s ease-in;
+}
+
+#welcomeSection .images:hover .iconView{
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+#welcomeSection .text h5{
+    color: bisque;
 }
 
 
