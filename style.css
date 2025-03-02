@@ -76,7 +76,7 @@ footer {
 }
 
 #welcomeSection {
-    margin-top: 100px;
+    margin: 100px auto;
     text-align: center;
 }
 
@@ -104,10 +104,33 @@ footer {
     cursor: pointer;
 }
 
-#welcomeSection .text h5{
+#welcomeSection .text{
+    width: 90%;
+}
+
+#welcomeSection .text h6{
     color: bisque;
 }
 
+#welcomeSection .text .welcomeText {
+    margin-bottom: 50px;
+}
+
+#welcomeSection .text .welcomeText p {
+    text-align: left;
+}
+
+#welcomeSection .text .bi {
+    font-size: 30px;
+    color: bisque;
+}
+
+#churchMission {
+    background-color: bisque;
+    color: black;
+    padding: 50px 20px;
+    text-align: center;
+}
 
 
 .events{
