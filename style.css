@@ -10,6 +10,12 @@ body{
     color: white;
 }
 
+body .no-scroll, html .no-scroll {
+  overflow: hidden;
+  height: 100vh;
+}
+
+
 a{
     text-decoration: none;
 }
@@ -44,6 +50,31 @@ footer {
     outline: none;
     box-shadow: none;
     border: none;
+}
+
+#navBackdrop {
+    content: "";
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-color: white;
+    opacity: 0.5;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+}
+
+#navMenu {
+    display: none;
+    position: fixed;
+    top: 0;
+    width: 60%;
+    height: 100vh;
+    background-color: black;
+    align-items: flex-start;
+    padding: 20px;
+    z-index: 999;
 }
 
 #nextUpcomingEvent {
@@ -188,13 +219,45 @@ footer {
     padding: 5px 20px;
 }
 
-#themes img{
+#themes .img-container{
+    position: relative;
+    overflow: hidden;
+}
+
+#themes .theme-image{
     width: 100%;
     height: auto;
 }
 
+#themes .img-container:hover .theme-image{
+    transform: scale(1.1);
+    transition: transform 1s ease-in-out;
+}
+
+#themes .overlay-text {
+    position: absolute;
+    bottom: -100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: black;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    text-align: center;
+    white-space: nowrap;
+}
+
+#themes .img-container:hover .overlay-text {
+    bottom: 50%;
+    transition: bottom 1s ease;
+}
+
 #worshipTeamResources{
     padding: 100px 20px;
+}
+
+#worshipTeamResources img {
+    width: 100%;
 }
 
 #donation{
@@ -236,12 +299,212 @@ footer {
     color: black;
 }
 
-.posts .leadersPost{
+#blog {
+    text-align: center;
+    padding: 100px 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+#blog .chevron button {
+    border: none;
+    background-color: white;
+    padding: 8px;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+}
+
+#blog .chevron button:hover {
+    cursor: pointer;
+}
+
+#blog .chevron .bi {
+    color: black;
+}
+
+#blog .chevron .bi:hover {
+    color: red;
+}
+
+.swiper-button-prev{
+    left: -8px;
+}
+
+.swiper-button-next{
+    right: -8px;
+}
+
+.swiper-button-prev::after,
+.swiper-button-next::after {
+  display: none;
+}
+
+#blog .blogs .card-wrapper{
+    justify-content: space-between;
+}
+
+#blog .blogs .card {
+    margin-top: 50px;
+    width: 47.5%;
+    text-align: left;
+}
+
+#blog .blogs .card .card-body{
+    position: relative;
+}
+
+#blog .blogs .card p{
+    position: absolute;
+    bottom: 2px;
+}
+
+#blog .swiper-scrollbar{
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    border-radius: none
+}
+
+#blog .swiper-scrollbar-drag {
+    background-color: bisque;
+    border-radius: 4px;
+}
+
+.modal{
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 95vw;
+    height: 95vh;
+    background-color: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    padding: 20px;
+}
+
+.modal-content {
+    position: relative;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.modal-content img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.modal-close {
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    background: #fff;
+    border: none;
+    font-size: 24px;
+    border-radius: 50%;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+.modal-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: white;
+    border: none;
+    font-size: 20px;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 50%;
+    z-index: 2;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+.modal-nav:hover {
+    background: bisque;
+}
+
+.modal-nav.prev {
+    left: -20px;
+}
+
+.modal-nav.next {
+    right: -20px;
+}
+
+#posts .leadersPost {
+    position: relative;
     width: 100%;
     height: 400px;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+}
+
+#posts .leadersPost::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     background-image: url('./images/theme-5.png');
     background-position: bottom center;
     background-repeat: no-repeat;
     background-size: 100% 100%;
-    opacity: 0.5;
+    z-index: -1;
+    opacity: 0.3;
+}
+
+#posts img{
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}
+
+#posts .carousel-item {
+    text-align: center;
+    font-size: 18px;
+}
+
+#posts .carousel-indicators button{
+    position: relative;
+    top: 100px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin: 0 10px;
+}
+
+
+/* MEDIA QUERY FOR LARGE SCREEN (LG) */
+@media (min-width: 768px) {
+    #navBackdrop {
+        z-index: -1;
+    }
+
+    #navBar #navMenu {
+        position: static;
+        background-color: transparent;
+        align-items: center;
+        height: 10vh;
+    }
+
+    #navBar .navbar-brand {
+        order: 1;
+        display: flex;
+        align-self: center;
+    }
+    
 }
