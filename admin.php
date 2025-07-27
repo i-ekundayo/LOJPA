@@ -15,6 +15,7 @@
     <form action="<?= $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data">
         <?php echo $message ?? null ?>
         <input type="file" name="nuggets" id="nuggets">
+        <input type="text" name="title" id="title" placeholder="Input the title" required>
         <input type="submit" value="submit" name="submit">
     </form>
 </body>

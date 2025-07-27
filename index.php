@@ -1,6 +1,7 @@
 <?php 
 include ('libs/connection.inc.php');
-getNuggets();
+$nuggets = getNuggets();
+$count = 0;
 ?>
 
 <!doctype html>
@@ -58,7 +59,6 @@ getNuggets();
     
     <!-- NEXT UPCOMING EVENT -->
     <section id="nextUpcomingEvent">
-      <!-- <?php getNuggets(); ?> -->
       <div id="image-slider"><img src="./images/image-slider-1.png" alt=""></div>
       <div class="container text-center d-flex flex-column align-items-center p-5">
         <h2 class="mt-4">Next event in:<br><h6>Heart For The House Sunday</h6></h2>
@@ -266,24 +266,27 @@ getNuggets();
       <div class="blogs">
         <div id="carouselBlog" class="swiper">
           <div class="swiper-wrapper">
-            <div class="swiper-slide">
-              <div class="card-wrapper d-flex">
-                <div class="card">
-                  <img src="./images/DAY-6.jpg" class="card-img-top">
-                  <div class="card-body">
-                    <h6 class="card-title">What do you want? - Part 4</h6>
-                    <p class="card-text"><small><cite>Evang Adeolu Felix</cite></small></p>
-                  </div>
-                </div>
-                <div class="card">
-                  <img src="./images/DAY-5.jpg" class="card-img-top">
-                  <div class="card-body">
-                    <h6 class="card-title">What do you want? - Part 3</h6>
-                    <p class="card-text"><small><cite>Evang Adeolu Felix</cite></small></p>
-                  </div>
+            <?php foreach($nuggets as $nugget) {
+              // echo $count;
+              if ($count % 2 == 0) { ?>
+                <div class="swiper-slide">
+                <div class="card-wrapper d-flex">
+              <?php } ?>
+
+              <div class="card">
+                <img src="./nuggets/<?= $nugget->image;?>" class="card-img-top">
+                <div class="card-body">
+                  <h6 class="card-title"><?= $nugget->title;?></h6>
+                  <p class="card-text"><small><cite>Evang Adeolu Felix</cite></small></p>
                 </div>
               </div>
-            </div>
+
+              <?php if ($count % 2 == 1 || $count == count($nuggets) - 1) { ?>
+                </div>
+                </div>
+              <?php }
+              $count++; 
+            } ?>
           </div>
         </div>
       </div> 
