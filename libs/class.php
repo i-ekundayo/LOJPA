@@ -19,3 +19,23 @@ class UploadNugget{
         }
     }
 }
+
+class UploadEvent {
+    public $event;
+    public $date;
+    public $venue;
+    public $time;
+    public function __construct()
+    {
+        $setEvent = setEvents();
+        $this->event = $setEvent->event;
+        $this->date = $setEvent->date;
+        $this->venue = $setEvent->venue;
+        $this->time = $setEvent->time;
+    }
+}
+
+
+
+
+
