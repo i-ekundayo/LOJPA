@@ -506,5 +506,9 @@ footer {
         display: flex;
         align-self: center;
     }
+
+    #upcomingEvents .meeting .upcomingEventTime{
+        display: flex;
+    }
     
 }

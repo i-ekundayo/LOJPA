@@ -46,28 +46,24 @@ function getNuggets() {
     return $nuggets;
 }
 
+function fetchFromDatabase($table) {
+    global $pdo;
+    $sql = ("SELECT * FROM $table");
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->fetchAll();
+    return $result;
+}
 
-// function to set the events from the form
-function setEvents() {
-    $eventErr = $dateErr = $venueErr = $timeErr = '';
-    
-    $event = filter_input(INPUT_POST, 'event', FILTER_SANITIZE_SPECIAL_CHARS);
-    $date = filter_input(INPUT_POST, 'date', FILTER_SANITIZE_SPECIAL_CHARS);
-    $venue = filter_input(INPUT_POST, 'venue', FILTER_SANITIZE_SPECIAL_CHARS);
-    $time = filter_input(INPUT_POST, 'time', FILTER_SANITIZE_SPECIAL_CHARS);
+function dateConversion($date) {
+    $month = strtoupper(date("M", strtotime($date)));
+    $day = date("m", strtotime($date));
 
-    if(empty($event)) {
-        $eventErr = '<p style="color:red"> Please enter the name of the event';
-    }
-    if(empty($date)) {
-        $dateErr = '<p style="color:red"> Please enter the date of the event';
-    }
-    if(empty($venue)) {
-        $venueErr = '<p style="color:red"> Please enter the venue of the event';
-    }
-    if(empty($time)) {
-        $timeErr = '<p style="color:red"> Please enter the time of the event';
-    }
+    return "$month $day";
+}
 
-    return (object) ['event' => $event, 'date' => $date, 'venue' => $venue, 'time' => $time, 'eventErr' => $eventErr, 'dateErr' => $dateErr, 'venueErr' => $venueErr, 'timeErr' => $timeErr];
+function timeConversion($time) {
+    $digitalTime = date("g:ia", strtotime($time));
+
+    return $digitalTime;
 }

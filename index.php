@@ -1,7 +1,12 @@
 <?php 
 include ('libs/connection.inc.php');
+// nuggets
 $nuggets = getNuggets();
 $count = 0;
+
+// upcoming events
+$upcomingEvents = fetchFromDatabase('events');
+
 ?>
 
 <!doctype html>
@@ -126,60 +131,18 @@ $count = 0;
       <h5 class="text-center">Upcoming Events</h5>
       <h2 class="text-center">Conferences & Events</h2>
         
-      <div class="btn-group events" role="group">
-        <button class="btn btn-primary" disabled>APR 24</button>
-        <div class="container d-flex justify-content-between border meeting">
-          <span class="d-flex align-items-center event"><a href="#" class="text-light">Church Leaders meeting</a></span>
-          <div class="d-flex">
-            <button class="btn btn-outline-secondary align-self-center disabled upcomingEventTime">1:00pm - 7:00pm</button>
-            <span class="d-flex align-self-center details"><a href="#" class="text-center text-light">Details</a></span>
+      <?php foreach($upcomingEvents as $events) { ?>
+        <div class="btn-group events" role="group">
+          <button class="btn btn-primary" disabled><?= dateConversion($events->date) ?></button>
+          <div class="container d-flex justify-content-between border meeting">
+            <span class="d-flex align-items-center event"><a href="#" class="text-light"><?= $events->event ?></a></span>
+            <div class="d-flex">
+              <button class="btn btn-outline-secondary align-self-center disabled upcomingEventTime"><?= timeConversion($events->time) ?></button>
+              <span class="d-flex align-self-center details"><a href="#" class="text-center text-light">Details</a></span>
+            </div>
           </div>
         </div>
-      </div>
-
-      <div class="btn-group events mt-2" role="group">
-        <button class="btn btn-primary" disabled>APR 09</button>
-        <div class="container d-flex justify-content-between border meeting">
-          <span class="d-flex align-items-center text-dark event"><a href="#" class="text-light">Prayer Day</a></span>
-          <div class="d-flex">
-            <button class="btn btn-outline-secondary align-self-center disabled upcomingEventTime">6:00pm - 8:00pm</button>
-            <span class="d-flex align-self-center details"><a href="#" class="text-center text-light">Details</a></span>
-          </div>
-        </div>
-      </div>
-
-      <div class="btn-group events mt-2" role="group">
-        <button class="btn btn-primary" disabled>MAR 02</button>
-        <div class="container d-flex justify-content-between border meeting">
-          <span class="d-flex align-items-center text-dark event"><a href="#" class="text-light">Monthly Band Tryouts</a></span>
-          <div class="d-flex">
-            <button class="btn btn-outline-secondary align-self-center disabled upcomingEventTime">3:00pm - 7:00pm</button>
-            <span class="d-flex align-self-center text-center details"><a href="#" class="text-center text-light">Details</a></span>
-          </div>
-        </div>
-      </div>
-
-      <div class="btn-group events mt-2" role="group">
-        <button class="btn btn-primary" disabled>JAN 31</button>
-        <div class="container d-flex justify-content-between border meeting">
-          <span class="d-flex align-items-center text-dark event"><a href="#" class="text-light">WOW Conference</a></span>
-          <div class="d-flex">
-            <button class="btn btn-outline-secondary align-self-center disabled upcomingEventTime">10:00am - 2:00pm</button>
-            <span class="d-flex align-self-center details"><a href="#" class="text-center text-light">Details</a></span>
-          </div>
-        </div>
-      </div>
-
-      <div class="btn-group events mt-2" role="group">
-        <button class="btn btn-primary" disabled>JUN 24</button>
-        <div class="container d-flex justify-content-between border meeting">
-          <span class="d-flex align-items-center text-dark event"><a href="#" class="text-light">Seniors Bible Study</a></span>
-          <div class="d-flex">
-            <button class="btn btn-outline-secondary align-self-center disabled upcomingEventTime">10:00am - 2:00pm</button>
-            <span class="d-flex align-self-center details"><a href="#" class="text-center text-light">Details</a></span>
-          </div> 
-        </div>
-      </div>
+      <?php } ?>
     </section>
 
     <!-- Theme display -->
