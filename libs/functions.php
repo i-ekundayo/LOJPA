@@ -46,14 +46,25 @@ function getNuggets() {
     return $nuggets;
 }
 
-function fetchFromDatabase($table) {
+function getEvents() {
     global $pdo;
-    $sql = ("SELECT * FROM $table");
+    $sql = ("SELECT * FROM events WHERE CONCAT(date, ' ', time) > NOW() ORDER BY date LIMIT 5");
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
     $result = $stmt->fetchAll();
     return $result;
 }
+
+function getNextUpcomingEvent() {
+    global $pdo;
+    $sql = ("SELECT date, time FROM events WHERE CONCAT(date, ' ', time) > NOW() ORDER BY date LIMIT 1");
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->fetch();
+    return $result;
+}
+
+
 
 function dateConversion($date) {
     $month = strtoupper(date("M", strtotime($date)));

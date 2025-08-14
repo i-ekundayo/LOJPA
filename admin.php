@@ -1,6 +1,7 @@
 <?php 
     include ('libs/connection.inc.php');
-    $events = new uploadEvent($pdo);
+
+    // NUGGETS
     if(isset($_POST['nuggets'])) {
         uploadNugget();
     }
@@ -25,6 +26,7 @@
     </form>
 
     <h1>Upcoming Events</h1>
+    <?php $events = new uploadEvent($pdo) ?>
     <form action="<?= $_SERVER['PHP_SELF'] ?>" method="POST" enctype="multipart/form-data">
         <div><label for="Event">Event:</label>
         <input type="text" name="event" id="event"></div>

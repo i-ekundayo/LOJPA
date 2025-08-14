@@ -14,11 +14,22 @@ document.getElementById("navBackdrop").addEventListener('click', () => {
   document.documentElement.classList.remove('no-scroll');
 })
 
+
 // NEXT UPCOMING EVENT TIMER
-var nextUpcomingEvent = new Date("August 31, 2025 00:00:00").getTime();
+var nextUpcomingEvent = new Date(eventDateTime).getTime();
 var x = setInterval(function() {
     var now = new Date().getTime();
     var distance = nextUpcomingEvent - now;
+    
+    if (distance < 0) {
+        clearInterval(x);
+        document.getElementById("days").innerHTML = "00";
+        document.getElementById("hrs").innerHTML = "00";
+        document.getElementById("mins").innerHTML = "00";
+        document.getElementById("secs").innerHTML = "00";
+
+        return;
+    }
 
     var days = Math.floor(distance / (1000 * 60 * 60 * 24));
     var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -29,15 +40,7 @@ var x = setInterval(function() {
     document.getElementById("hrs").innerHTML = hours;
     document.getElementById("mins").innerHTML = minutes;
     document.getElementById("secs").innerHTML = seconds;
-
-    if (distance < 0) {
-        clearInterval(x);
-        document.getElementById("days").innerHTML = "00";
-        document.getElementById("hrs").innerHTML = "00";
-        document.getElementById("mins").innerHTML = "00";
-        document.getElementById("secs").innerHTML = "00";
-
-    }
+    
 
 }, 1000);
 

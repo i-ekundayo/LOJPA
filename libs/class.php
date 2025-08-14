@@ -55,12 +55,13 @@ class UploadEvent {
 
     public function setFields() {
         if(empty($this->errors)){
-            // $sql = "INSERT INTO events (event, date, venue, time) VALUES (?, ?, ?, ?)";
-            // $stmt = $this->pdo->prepare($sql);
-            // $stmt->execute([$this->data['event'], $this->data['date'], $this->data['venue'], $this->data['time']]);
+            $sql = "INSERT INTO events (event, date, venue, time) VALUES (?, ?, ?, ?)";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([$this->data['event'], $this->data['date'], $this->data['venue'], $this->data['time']]);
 
-            echo 'event successfully uploaded';
-        }   
+            $message = '<p style="color:green">event successfully uploaded</p>';
+            echo $message;
+        }
     }
 
     public function getErrors($field) {
