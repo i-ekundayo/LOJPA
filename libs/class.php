@@ -24,7 +24,7 @@ class UploadEvent {
     private $pdo;
     public $data = [];
     private $errors = [];
-    private $fields = ['event', 'date', 'venue', 'time'];
+    private $fields = ['event', 'startDate', 'endDate', 'venue', 'startTime', 'endTime'];
 
     public function __construct($pdo) {
         $this->pdo = $pdo;
@@ -55,9 +55,9 @@ class UploadEvent {
 
     public function setFields() {
         if(empty($this->errors)){
-            $sql = "INSERT INTO events (event, date, venue, time) VALUES (?, ?, ?, ?)";
+            $sql = "INSERT INTO events (event, startDate, endDate, venue, startTime, endTime) VALUES (?, ?, ?, ?, ?, ?)";
             $stmt = $this->pdo->prepare($sql);
-            $stmt->execute([$this->data['event'], $this->data['date'], $this->data['venue'], $this->data['time']]);
+            $stmt->execute([$this->data['event'], $this->data['startDate'], $this->data['endDate'], $this->data['venue'], $this->data['startTime'], $this->data['endTime']]);
 
             $message = '<p style="color:green">event successfully uploaded</p>';
             echo $message;

@@ -9,7 +9,8 @@ $upcomingEvents = getEvents();
 
 // next upcoming event
 $nextUpcomingEvent = getNextUpcomingEvent();
-$eventDateTime = "$nextUpcomingEvent->date $nextUpcomingEvent->time";
+$eventDateTime = "$nextUpcomingEvent->startDate $nextUpcomingEvent->startTime";
+
 ?>
 
 <!doctype html>
@@ -21,7 +22,7 @@ $eventDateTime = "$nextUpcomingEvent->date $nextUpcomingEvent->time";
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="style.css?v=<?php echo time(); ?>">
   </head>
   <body>
 
@@ -44,23 +45,22 @@ $eventDateTime = "$nextUpcomingEvent->date $nextUpcomingEvent->time";
         <div class="collapse navbar-collapse" id="navMenu">
           <ul class="navbar-nav sm-flex-column">
             <li class="nav-item">
-              <a href="#" class="nav-link">Home</a>
+              <a href="#navBar" class="nav-link">Home</a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link">Events</a>
+              <a href="#upcomingEvents" class="nav-link">Events</a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link">Sermons</a>
+              <a href="#assistance" class="nav-link">Sermons</a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link">Blog</a>
+              <a href="#blog" class="nav-link">Blog</a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link">About</a>
+              <a href="#mainFooter" class="nav-link">About</a>
             </li>
           </ul>
         </div>
-
       </div>
     </nav>
 
@@ -71,14 +71,36 @@ $eventDateTime = "$nextUpcomingEvent->date $nextUpcomingEvent->time";
       <div class="container text-center d-flex flex-column align-items-center p-5">
         <h2 class="mt-4">Next event in:<br><h6>Heart For The House Sunday</h6></h2>
         <span class="nextEventTime d-flex justify-content-between mb-4">
-          <span><h3 id="days">239</h3><small>DAYS</small></span> <br>
-          <span><h3 id="hrs">239</h3><small>HOURS</small></span> <br>
-          <span><h3 id="mins">239</h3><small>MINUTES</small></span> <br>
-          <span><h3 id="secs">239</h3><small>SECONDS</small></span> <br>
+          <span><h3 id="days"></h3><small>DAYS</small></span> <br>
+          <span><h3 id="hrs"></h3><small>HOURS</small></span> <br>
+          <span><h3 id="mins"></h3><small>MINUTES</small></span> <br>
+          <span><h3 id="secs"></h3><small>SECONDS</small></span> <br>
         </span>
-        <button class="btn p-3 bg-expand animated">EVENT DETAIL</button>
+        <button data-bs-toggle="modal" data-bs-target="#nextEventModal" class="btn p-3 bg-expand animated">EVENT DETAIL</button>
       </div>
     </section>
+
+    <!-- Next Event Modal -->
+    <div class="modal fade" id="nextEventModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="nextEventModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="nextEventModalLabel"><?= $nextUpcomingEvent->event;?></h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <?php 
+              echo 'Venue: ' . $nextUpcomingEvent->venue . '<br>';
+              echo 'Time: ' . timeConversion($nextUpcomingEvent->startTime) . ' - ' . timeConversion($nextUpcomingEvent->endTime) . '<br>';
+              echo 'Date: ' . dateConversion($nextUpcomingEvent->startDate)[1] . ' - ' .  dateConversion($nextUpcomingEvent->endDate)[1];
+            ?>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Welcome Section -->
     <section id="welcomeSection" class="container d-flex flex-column align-items-center">
@@ -136,12 +158,34 @@ $eventDateTime = "$nextUpcomingEvent->date $nextUpcomingEvent->time";
         
       <?php foreach($upcomingEvents as $events) { ?>
         <div class="btn-group events" role="group">
-          <button class="btn btn-primary" disabled><?= dateConversion($events->date) ?></button>
+          <button class="btn btn-primary date" disabled><?= dateConversion($events->startDate)[0] ?></button>
           <div class="container d-flex justify-content-between border meeting">
-            <span class="d-flex align-items-center event"><a href="#" class="text-light"><?= $events->event ?></a></span>
+            <span class="d-flex align-items-center event"><?= $events->event ?></span>
             <div class="d-flex">
-              <button class="btn btn-outline-secondary align-self-center disabled upcomingEventTime"><?= timeConversion($events->time) ?></button>
-              <span class="d-flex align-self-center details"><a href="#" class="text-center text-light">Details</a></span>
+              <button class="btn btn-outline-secondary align-self-center disabled upcomingEventTime"><?= timeConversion($events->startTime) ?> <?= '-' . timeConversion($events->endTime) ?? null ?></button>
+              <span class="d-flex align-self-center details" data-bs-toggle="modal" data-bs-target="#upcomingEventsModal"><button class="text-center text-light">Details</button></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Upcoming Events Modal -->
+        <div class="modal fade" id="upcomingEventsModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="upcomingEventsModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="upcomingEventsModalLabel"><?= $events->event;?></h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <?php 
+                  echo 'Venue: ' . $events->venue . '<br>';
+                  echo 'Time: ' . timeConversion($events->startTime) . ' - ' . timeConversion($events->endTime) . '<br>';
+                  echo 'Date: ' . dateConversion($events->startDate)[1] . ' - ' .  dateConversion($events->endDate)[1];
+                ?>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              </div>
             </div>
           </div>
         </div>
@@ -176,7 +220,7 @@ $eventDateTime = "$nextUpcomingEvent->date $nextUpcomingEvent->time";
         </div>
         <div class="col-6 col-md-4 col-lg-3 d-none d-md-block img-container">
           <img src="./images/theme-6.png" alt="theme-2.png" class="theme-image">
-          <div class="overlay-text">FIND LOVE INDISE YOURSELF</div>
+          <div class="overlay-text">FIND LOVE INSIDE YOURSELF</div>
         </div>
 
         <!-- show only on large screens -->
@@ -257,17 +301,17 @@ $eventDateTime = "$nextUpcomingEvent->date $nextUpcomingEvent->time";
         </div>
       </div> 
       <div class="swiper-scrollbar"></div>
-    </section>
 
-    <!-- Modal -->
-    <div class="modal" id="imageModal">
-      <div class="modal-content">
-        <button class="modal-close" id="closeModal">&times;</button>
-        <button class="modal-nav prev" id="prevModal">&#10094;</button>
-        <img src="" alt="Full View" id="modalImage" />
-        <button class="modal-nav next" id="nextModal">&#10095;</button>
+      <!-- Blog Modal -->
+      <div class="modal" id="imageModal">
+        <div class="modal-content">
+          <button class="modal-close" id="closeModal">&times;</button>
+          <button class="modal-nav prev" id="prevModal">&#10094;</button>
+          <img src="" alt="Full View" id="modalImage"/>
+          <button class="modal-nav next" id="nextModal">&#10095;</button>
+        </div>
       </div>
-    </div>
+    </section>
 
     <!-- Posts -->
     <section id="posts">
@@ -315,9 +359,12 @@ $eventDateTime = "$nextUpcomingEvent->date $nextUpcomingEvent->time";
     </section>
 
     <!-- Footer -->
-    <footer class="p-3 text-center">
+    <footer id="mainFooter" class="p-3 text-center">
       <p>Emerald &copy; 2025 All Rights Reserved.</p>
+      <button><a href="#navBar">Back to Top</a></button>
     </footer>
+
+    
      
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

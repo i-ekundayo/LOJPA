@@ -48,7 +48,7 @@ function getNuggets() {
 
 function getEvents() {
     global $pdo;
-    $sql = ("SELECT * FROM events WHERE CONCAT(date, ' ', time) > NOW() ORDER BY date LIMIT 5");
+    $sql = ("SELECT * FROM events WHERE CONCAT(startDate, ' ', startTime) > NOW() ORDER BY startDate LIMIT 5");
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
     $result = $stmt->fetchAll();
@@ -57,7 +57,7 @@ function getEvents() {
 
 function getNextUpcomingEvent() {
     global $pdo;
-    $sql = ("SELECT date, time FROM events WHERE CONCAT(date, ' ', time) > NOW() ORDER BY date LIMIT 1");
+    $sql = ("SELECT * FROM events WHERE CONCAT(startDate, ' ', startTime) > NOW() ORDER BY startDate LIMIT 1");
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
     $result = $stmt->fetch();
@@ -67,14 +67,23 @@ function getNextUpcomingEvent() {
 
 
 function dateConversion($date) {
-    $month = strtoupper(date("M", strtotime($date)));
-    $day = date("m", strtotime($date));
+    if(!empty($date)) {
+        $monthAndDay = strtoupper(date("M d", strtotime($date)));
 
-    return "$month $day";
+        $dayMonthandYear = date("d F, Y", strtotime($date));
+
+        return [$monthAndDay, $dayMonthandYear];
+    } else {
+        return ["N/A", "N/A"]; 
+    }
 }
 
 function timeConversion($time) {
-    $digitalTime = date("g:ia", strtotime($time));
+    if(!empty($time)) {
+        $digitalTime = date("g:ia", strtotime($time));
 
-    return $digitalTime;
+        return $digitalTime;
+    } else {
+        return "N/A"; 
+    }
 }

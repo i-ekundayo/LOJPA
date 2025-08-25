@@ -65,7 +65,7 @@ const swiper = new Swiper('.swiper', {
 
 
 // MODAL
-const modal = document.getElementById("imageModal");
+const imageModal = document.getElementById("imageModal");
 const modalImg = document.getElementById("modalImage");
 const closeBtn = document.getElementById("closeModal");
 const nextBtn = document.getElementById("nextModal");
@@ -78,20 +78,20 @@ let currentIndex = 0;
 images.forEach((img, index) => {
   img.addEventListener('click', () => {
     modalImg.src = img.src;
-    modal.style.display = 'flex';
+    imageModal.style.display = 'flex';
     currentIndex = index;
   });
 })
 
 // Close modal using the close button
 closeBtn.addEventListener('click', () => {
-  modal.style.display = 'none';
+  imageModal.style.display = 'none';
 });
 
 // Close modal when clicking outside image
-modal.addEventListener('click', (e) => {
+imageModal.addEventListener('click', (e) => {
   if (e.target === modal) {
-    modal.style.display = "none";    
+    imageModal.style.display = "none";    
   }
 });
 

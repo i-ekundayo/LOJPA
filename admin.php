@@ -31,14 +31,20 @@
         <div><label for="Event">Event:</label>
         <input type="text" name="event" id="event"></div>
         <?= $events->getErrors('event') ?><br>
-        <div><label for="Date">Date:</label>
-        <input type="date" name="date" id="date"></div>
+        <div><label for="Date">Start Date:</label>
+        <input type="date" name="startDate" id="startDate"></div>
+        <?= $events->getErrors('date') ?><br>
+        <div><label for="Date">End Date:</label>
+        <input type="date" name="endDate" id="endDate"></div>
         <?= $events->getErrors('date') ?><br>
         <div><label for="Venue">Venue:</label>
         <input type="text" name="venue" id="venue"></div>
         <?= $events->getErrors('venue') ?><br>
-        <div><label for="Time">Time</label>
-        <input type="time" name="time" id="time"></div>
+        <div><label for="Time">Start Time:</label>
+        <input type="time" name="startTime" id="startTime"></div>
+        <?= $events->getErrors('time') ?><br>
+        <div><label for="End Time">End Time:</label>
+        <input type="time" name="endTime" id="endTime"></div>
         <?= $events->getErrors('time') ?><br>
         <input type="submit" value="Submit" name="events">
     </form>

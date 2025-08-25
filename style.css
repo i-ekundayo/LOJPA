@@ -62,7 +62,7 @@ footer {
     opacity: 0.5;
     width: 100vw;
     height: 100vh;
-    z-index: 1;
+    z-index: 999;
 }
 
 #navMenu {
@@ -207,17 +207,23 @@ footer {
     width: 80px;
 }
 
+#upcomingEvents .events .details button {
+    all: unset;
+    cursor: pointer;
+}
+
 #upcomingEvents .meeting .upcomingEventTime{
-    border-top: none;
-    border-bottom: none;
-    border-radius: 0;
-    display: block;
-    border: 1px solid red;
+    border: none;
+    display: none;
 }
 
 #upcomingEvents .meeting .details{
     border-left: 1px solid rgb(219, 219, 219);
     padding: 5px 20px;
+}
+
+#upcomingEventsModal, #nextEventModal {
+    color: #000;
 }
 
 #themes .img-container{
@@ -375,34 +381,35 @@ footer {
     border-radius: 4px;
 }
 
-.modal{
+#imageModal{
     display: none;
     position: fixed;
     z-index: 999;
     left: 0;
     top: 0;
-    width: 95vw;
-    height: 95vh;
+    width: 100vw;
+    height: 100vh;
     background-color: rgba(0, 0, 0, 0.8);
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    padding: 20px;
+    padding: 30px;
 }
 
-.modal-content {
+#imageModal .modal-content {
     position: relative;
-    max-width: 100%;
+    width: 100%;
+    max-width: 500px;
     max-height: 100%;
 }
 
-.modal-content img {
+#imageModal .modal-content img {
     width: 100%;
     height: auto;
     border-radius: 8px;
 }
 
-.modal-close {
+#imageModal .modal-close {
     position: absolute;
     top: -20px;
     right: -20px;
@@ -416,7 +423,7 @@ footer {
     box-shadow: 0 2px 5px rgba(0,0,0,0.3);
 }
 
-.modal-nav {
+#imageModal .modal-nav {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -426,19 +433,18 @@ footer {
     padding: 8px 12px;
     cursor: pointer;
     border-radius: 50%;
-    z-index: 2;
     box-shadow: 0 2px 5px rgba(0,0,0,0.3);
 }
 
-.modal-nav:hover {
+#imageModal .modal-nav:hover {
     background: bisque;
 }
 
-.modal-nav.prev {
+#imageModal .modal-nav.prev {
     left: -20px;
 }
 
-.modal-nav.next {
+#imageModal .modal-nav.next {
     right: -20px;
 }
 
@@ -488,10 +494,26 @@ footer {
     margin: 0 10px;
 }
 
+#mainFooter button {
+    padding: 5px;
+    background-color: red;
+    border: none;
+    position: fixed;
+    right: 0px;
+    bottom: 0px;
+    z-index: 2;
+}
+
+#mainFooter button a{
+    text-decoration: none;
+    color: bisque;
+}
+
 
 /* MEDIA QUERY FOR LARGE SCREEN (LG) */
 @media (min-width: 768px) {
     #navBackdrop {
+        display: none;
         z-index: -1;
     }
 
