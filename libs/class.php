@@ -31,7 +31,6 @@ class UploadEvent {
         if ($this->isSubmitted()){
             $this->sanitize();
             $this->setErrors();
-            $this->setFields();
         }
     }
 
@@ -59,9 +58,9 @@ class UploadEvent {
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute([$this->data['event'], $this->data['startDate'], $this->data['endDate'], $this->data['venue'], $this->data['startTime'], $this->data['endTime']]);
 
-            $message = '<p style="color:green">event successfully uploaded</p>';
-            echo $message;
+            return true;
         }
+        return false;
     }
 
     public function getErrors($field) {

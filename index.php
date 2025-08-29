@@ -9,7 +9,10 @@ $upcomingEvents = getEvents();
 
 // next upcoming event
 $nextUpcomingEvent = getNextUpcomingEvent();
-$eventDateTime = "$nextUpcomingEvent->startDate $nextUpcomingEvent->startTime";
+if(!empty($nextUpcomingEvent)) {
+  $eventDateTime = "$nextUpcomingEvent->startDate $nextUpcomingEvent->startTime";
+}
+
 
 ?>
 
@@ -71,10 +74,10 @@ $eventDateTime = "$nextUpcomingEvent->startDate $nextUpcomingEvent->startTime";
       <div class="container text-center d-flex flex-column align-items-center p-5">
         <h2 class="mt-4">Next event in:<br><h6>Heart For The House Sunday</h6></h2>
         <span class="nextEventTime d-flex justify-content-between mb-4">
-          <span><h3 id="days"></h3><small>DAYS</small></span> <br>
-          <span><h3 id="hrs"></h3><small>HOURS</small></span> <br>
-          <span><h3 id="mins"></h3><small>MINUTES</small></span> <br>
-          <span><h3 id="secs"></h3><small>SECONDS</small></span> <br>
+          <span><h3 id="days">00</h3><small>DAYS</small></span> <br>
+          <span><h3 id="hrs">00</h3><small>HOURS</small></span> <br>
+          <span><h3 id="mins">00</h3><small>MINUTES</small></span> <br>
+          <span><h3 id="secs">00</h3><small>SECONDS</small></span> <br>
         </span>
         <button data-bs-toggle="modal" data-bs-target="#nextEventModal" class="btn p-3 bg-expand animated">EVENT DETAIL</button>
       </div>
@@ -85,14 +88,18 @@ $eventDateTime = "$nextUpcomingEvent->startDate $nextUpcomingEvent->startTime";
       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title fs-5" id="nextEventModalLabel"><?= $nextUpcomingEvent->event;?></h1>
+            <h1 class="modal-title fs-5" id="nextEventModalLabel"><?= $nextUpcomingEvent->event ?? 'No Upcoming Event';?></h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
             <?php 
-              echo 'Venue: ' . $nextUpcomingEvent->venue . '<br>';
-              echo 'Time: ' . timeConversion($nextUpcomingEvent->startTime) . ' - ' . timeConversion($nextUpcomingEvent->endTime) . '<br>';
-              echo 'Date: ' . dateConversion($nextUpcomingEvent->startDate)[1] . ' - ' .  dateConversion($nextUpcomingEvent->endDate)[1];
+              if(!empty($nextUpcomingEvent)) {
+                echo 'Venue: ' . $nextUpcomingEvent->venue . '<br>';
+                echo 'Time: ' . timeConversion($nextUpcomingEvent->startTime) . ' - ' . timeConversion($nextUpcomingEvent->endTime) . '<br>';
+                echo 'Date: ' . dateConversion($nextUpcomingEvent->startDate)[1] . ' - ' .  dateConversion($nextUpcomingEvent->endDate)[1];
+              } else {
+                echo 'No Upcoming Event';
+              }
             ?>
           </div>
           <div class="modal-footer">
@@ -155,21 +162,22 @@ $eventDateTime = "$nextUpcomingEvent->startDate $nextUpcomingEvent->startTime";
     <section class="container" id="upcomingEvents">
       <h5 class="text-center">Upcoming Events</h5>
       <h2 class="text-center">Conferences & Events</h2>
-        
-      <?php foreach($upcomingEvents as $events) { ?>
+       
+      <?php if(!empty($upcomingEvents)) {
+      foreach($upcomingEvents as $events) { ?>
         <div class="btn-group events" role="group">
           <button class="btn btn-primary date" disabled><?= dateConversion($events->startDate)[0] ?></button>
           <div class="container d-flex justify-content-between border meeting">
             <span class="d-flex align-items-center event"><?= $events->event ?></span>
             <div class="d-flex">
               <button class="btn btn-outline-secondary align-self-center disabled upcomingEventTime"><?= timeConversion($events->startTime) ?> <?= '-' . timeConversion($events->endTime) ?? null ?></button>
-              <span class="d-flex align-self-center details" data-bs-toggle="modal" data-bs-target="#upcomingEventsModal"><button class="text-center text-light">Details</button></span>
+              <span class="d-flex align-self-center details" data-bs-toggle="modal" data-bs-target="#<?= $events->id ?>Modal"><button class="text-center text-light">Details</button></span>
             </div>
           </div>
         </div>
 
         <!-- Upcoming Events Modal -->
-        <div class="modal fade" id="upcomingEventsModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="upcomingEventsModalLabel" aria-hidden="true">
+        <div class="modal fade" id="<?= $events->id ?>Modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="upcomingEventsModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
               <div class="modal-header">
@@ -189,7 +197,9 @@ $eventDateTime = "$nextUpcomingEvent->startDate $nextUpcomingEvent->startTime";
             </div>
           </div>
         </div>
-      <?php } ?>
+      <?php }} else {
+        echo '<h3 class="text-center" style="color:red">No Upcoming Events</h3>';
+      } ?>
     </section>
 
     <!-- Theme display -->
@@ -261,6 +271,7 @@ $eventDateTime = "$nextUpcomingEvent->startDate $nextUpcomingEvent->startTime";
         <h4>Daily Nugget</h4>
         <h2>From our blog</h2>
       </div>
+      <?php if(!empty($nuggets)) { ?>
       <div class="chevron">
         <div class="swiper-button-prev">
           <button>
@@ -276,7 +287,8 @@ $eventDateTime = "$nextUpcomingEvent->startDate $nextUpcomingEvent->startTime";
       <div class="blogs">
         <div id="carouselBlog" class="swiper">
           <div class="swiper-wrapper">
-            <?php foreach($nuggets as $nugget) {
+            <?php
+            foreach($nuggets as $nugget) {
               // echo $count;
               if ($count % 2 == 0) { ?>
                 <div class="swiper-slide">
@@ -296,11 +308,14 @@ $eventDateTime = "$nextUpcomingEvent->startDate $nextUpcomingEvent->startTime";
                 </div>
               <?php }
               $count++; 
-            } ?>
+            }?>
           </div>
         </div>
-      </div> 
+      </div>
       <div class="swiper-scrollbar"></div>
+      <?php } else {
+        echo '<h3 class="text-center" style="color:red"> Nuggets Unavailable. </h3>';
+      } ?> 
 
       <!-- Blog Modal -->
       <div class="modal" id="imageModal">

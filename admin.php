@@ -6,6 +6,14 @@
         uploadNugget();
     }
 
+    // EVENTS
+    $events = new uploadEvent($pdo);
+    if($events->isSubmitted()) {
+        if($events->setFields()) {
+            header("Location: admin.php?success=events");
+        }
+    }
+
 ?>
 
 
@@ -26,26 +34,29 @@
     </form>
 
     <h1>Upcoming Events</h1>
-    <?php $events = new uploadEvent($pdo) ?>
+    <?php if(isset($_GET['success'])) {
+        $message = '<p style="color:green">event successfully uploaded</p>';
+        echo $message;
+    } ?>
     <form action="<?= $_SERVER['PHP_SELF'] ?>" method="POST" enctype="multipart/form-data">
         <div><label for="Event">Event:</label>
         <input type="text" name="event" id="event"></div>
         <?= $events->getErrors('event') ?><br>
         <div><label for="Date">Start Date:</label>
         <input type="date" name="startDate" id="startDate"></div>
-        <?= $events->getErrors('date') ?><br>
+        <?= $events->getErrors('startDate') ?><br>
         <div><label for="Date">End Date:</label>
         <input type="date" name="endDate" id="endDate"></div>
-        <?= $events->getErrors('date') ?><br>
+        <?= $events->getErrors('endDate') ?><br>
         <div><label for="Venue">Venue:</label>
         <input type="text" name="venue" id="venue"></div>
         <?= $events->getErrors('venue') ?><br>
         <div><label for="Time">Start Time:</label>
         <input type="time" name="startTime" id="startTime"></div>
-        <?= $events->getErrors('time') ?><br>
+        <?= $events->getErrors('startTime') ?><br>
         <div><label for="End Time">End Time:</label>
         <input type="time" name="endTime" id="endTime"></div>
-        <?= $events->getErrors('time') ?><br>
+        <?= $events->getErrors('endTime') ?><br>
         <input type="submit" value="Submit" name="events">
     </form>
 

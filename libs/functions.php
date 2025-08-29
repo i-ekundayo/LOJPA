@@ -57,7 +57,7 @@ function getEvents() {
 
 function getNextUpcomingEvent() {
     global $pdo;
-    $sql = ("SELECT * FROM events WHERE CONCAT(startDate, ' ', startTime) > NOW() ORDER BY startDate LIMIT 1");
+    $sql = ("SELECT * FROM events WHERE CONCAT(startDate, ' ', startTime) > NOW() ORDER BY startDate, startTime");
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
     $result = $stmt->fetch();

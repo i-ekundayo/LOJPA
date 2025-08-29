@@ -222,7 +222,7 @@ footer {
     padding: 5px 20px;
 }
 
-#upcomingEventsModal, #nextEventModal {
+#upcomingEvents .modal, #nextEventModal {
     color: #000;
 }
 
@@ -348,23 +348,8 @@ footer {
   display: none;
 }
 
-#blog .blogs .card-wrapper{
-    justify-content: space-between;
-}
-
-#blog .blogs .card {
-    margin-top: 50px;
-    width: 47.5%;
-    text-align: left;
-}
-
-#blog .blogs .card .card-body{
-    position: relative;
-}
-
-#blog .blogs .card p{
-    position: absolute;
-    bottom: 2px;
+#blog .swiper-wrapper {
+    justify-content: center;
 }
 
 #blog .swiper-scrollbar{
